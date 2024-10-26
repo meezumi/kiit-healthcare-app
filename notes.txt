@@ -1,0 +1,17 @@
+Integrate with your server -> API key
+
+select all scopes 
+
+CREATE DATABASE
+
+create collection -> patient 
+again same for doctor
+and again for appointment
+
+next, we create bucket.
+
+npm install node-appwrite
+
+https://appwrite.io/docs/references/cloud/server-nodejs/users
+
+

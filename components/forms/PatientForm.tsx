@@ -2,6 +2,7 @@
  
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+// biome-ignore lint/style/useImportType: <explanation>
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
@@ -10,6 +11,7 @@ import SubmitButton from "../SubmitButton"
 import { useState } from "react"
 import { UserFormValidation } from "@/lib/validation"
 import { useRouter } from "next/navigation"
+import { createUser } from "@/lib/actions/patient.actions"
  
 export enum FormFieldType {
   INPUT = 'input',
@@ -36,14 +38,14 @@ const PatientForm = () => {
   })
  
   // 2. Define a submit handler.
-  function onSubmit({ name, email, phone}: z.infer<typeof UserFormValidation>) {
+  async function onSubmit({ name, email, phone}: z.infer<typeof UserFormValidation>) {
     setisLoading(true)
     try {
-      // const userData = { name, email, phone }
+      const userData = { name, email, phone }
 
-      // const user = await createUser(userData);
+      const user = await createUser(userData);
 
-      // if (user) router.push(`/patients/${user.$id}/register`)
+      if (user) router.push(`/patients/${user.$id}/register`)
     } catch (error) {
       console.log(error);
     }
@@ -86,10 +88,10 @@ const PatientForm = () => {
 						control={form.control}
 						name="phone"
 						label="Phone Number"
-						placeholder="(91) 25321-24423"
+						placeholder="(555) 123-4567"
 					/>
 
-          <SubmitButton isLoading={isLoading}> Get Started</SubmitButton>
+					<SubmitButton isLoading={isLoading}> Get Started</SubmitButton>
 				</form>
 			</Form>
 		);

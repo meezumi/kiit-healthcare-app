@@ -17,12 +17,15 @@ export const createUser = async (user: CreateUserParams) => {
 
     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     } catch (error: any) {
-        if(error && error?.code === 409) {
+        if (error && error?.code === 409) {
             const documents = await users.list([
                 Query.equal('email', [user.email])
             ])
 
-            return documents?.users[0]
+            const existingUser = documents?.users[0];
+            if (!existingUser) throw new Error('User conflict but could not retrieve existing user.');
+            return parseStringify(existingUser);
         }
+        throw error;
     }
 }
